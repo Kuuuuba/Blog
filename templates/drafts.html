@@ -1,0 +1,40 @@
+<!-- blog/templates/drafts.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<table class="table">
+   <thead>
+     <tr>
+       <th scope="col">Data</th>
+       <th scope="col">Tytuł</th>
+       <th scope="col">Treść</th>
+       <th scope="col"></th>
+     </tr>
+   </thead>
+   <tbody>
+       {% for post in drafts %}
+     <tr>
+       <td>
+           {{ post.pub_date.strftime('%Y-%m-%d') }}
+       </td>
+       <td>
+           <a href="{{ url_for('edit_entry', entry_id=post.id) }}">
+               {{ post.title }}
+           </a>
+       </td>
+       <td>{{ post.body|truncate(100, true) }}</td>
+        <form action="/delete/post/{{ post.id }}" method="POST">
+         <td>
+            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+             <button type="submit" class="btn btn-danger">Usuń</button>
+            </div>
+         </td>
+        </form>
+     </tr>
+     {% endfor %}
+   </tbody>
+ </table>
+
+{% endblock %}
